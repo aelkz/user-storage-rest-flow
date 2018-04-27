@@ -40,12 +40,12 @@ public class UsernamePasswordForm extends AbstractUsernameFormAuthenticator impl
         try {
             result = validateUserAndPassword(context, formData);
         } catch (ServicoIndisponivelException sie) {
-            context.form().addError(new FormMessage(null, "servicoIndisponivel"));
-            Response challengeResponse = context.form().createErrorPage(Response.Status.NOT_ACCEPTABLE);
+
+            Response challengeResponse = context.form().setError("servicoIndisponivel", new Object[0]).createLogin();
             context.challenge(challengeResponse);
         } catch (CPFInexistenteException cie) {
-            context.form().addError(new FormMessage(null, "cpfInexistente"));
-            Response challengeResponse = context.form().createErrorPage(Response.Status.NOT_ACCEPTABLE);
+            
+            Response challengeResponse = context.form().setError("cpfInexistente", new Object[0]).createLogin();
             context.challenge(challengeResponse);
         }
         return result;
